@@ -1,0 +1,70 @@
+{% load gravatar %}
+{% include "main/header.html" %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{{post.img_url}}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{post.title}}</h1>
+            <h2 class="subheading">{{post.subtitle}}</h2>
+            <span class="meta">Posted by
+              <a href="#">{{post.author.get_full_name}}</a>
+              on {{post.date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {{ post.body|safe }}
+          <hr>
+            {% if user.is_superuser %}
+            <div class="clearfix">
+            <a class="btn btn-primary float-right" href="{% url 'edit_post' post.id %}">Edit Post</a>
+            </div>
+            {% endif %}
+
+
+
+<!--           Comments Area -->
+          <form action="" method="post" class="form">
+            {% csrf_token %}
+            <div class="form-group  required">
+              {{ form }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+          </form>
+          <div class="col-lg-8 col-md-10 mx-auto comment">
+              <ul class="commentList">
+                {% for comment in post.comment_set.all %}
+                <li>
+                    <div class="commenterImage">
+                      <img src="{% gravatar_url comment.comment_author.email 100 %}"/>
+                    </div>
+                    <div class="commentText">
+                      <p>{{ comment.text }}</p>
+                      {% if user.is_superuser %}
+                      <a href="#">✘</a>
+                      {% endif %}
+                      <span class="date sub-text">{{ comment.comment_author.get_full_name }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+
+          </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+{% include "main/footer.html" %}

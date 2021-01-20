@@ -1,0 +1,41 @@
+{% include "main/header.html" %}
+{% load static %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{% static 'main/img/edit-bg.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            {% if is_edit %}
+            <h1>Edit Post</h1>
+            {% else %}
+            <h1>New Post</h1>
+            {% endif %}
+            <span class="subheading">You're going to make a great blog post!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form action="" method="post" class="form" role="form" novalidate>
+            {% csrf_token %}
+            {{ form.media }}
+            <p>{{ form.non_field_errors }}</p>
+            {% for field in form %}
+            <div class="form-group required">
+              <label class="control-label">{{ field.label }}</label>
+              {{ field }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Submit Post</button>
+          </form>
+      </div>
+    </div>
+  </div>
+
+{% include "main/footer.html" %}

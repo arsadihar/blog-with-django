@@ -1,0 +1,10 @@
+asgiref==3.3.1
+coverage==5.3.1
+Django==3.1.5
+django-bootstrap-toolkit==2.15.0
+django-ckeditor==6.0.0
+django-gravatar2==1.4.4
+django-js-asset==1.2.2
+psycopg2==2.8.6
+pytz==2020.5
+sqlparse==0.4.1
